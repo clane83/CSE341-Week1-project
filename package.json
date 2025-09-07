@@ -3,5 +3,24 @@
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "mongodb": "^6.19.0"
-  }
+  },
+  "name": "cse341-week1-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clane83/CSE341-Week1-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clane83/CSE341-Week1-project/issues"
+  },
+  "homepage": "https://github.com/clane83/CSE341-Week1-project#readme"
 }
