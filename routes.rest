@@ -1,0 +1,35 @@
+//LOCALHOST TESTING
+###GET ALL USERS
+GET http://localhost:3001/contacts
+
+
+###GET SINGLE USER
+GET http://localhost:3001/contacts/68ba69958787c8d2ef38d21a
+
+
+###CREATE USER
+POST http://localhost:3001/contacts
+Content-Type: application/json
+
+{
+    "email": "req.body.email",
+    "firstName": "req.body.firstName",
+    "lastName": "req.body.lastName",
+    "birthday": "req.body.birthday",
+    "favoriteColor": "req.body.favoriteColor"
+}
+
+###UPDATE USER
+PUT http://localhost:3001/contacts/68c0ead8d45fa9901955eb43
+Content-Type: application/json
+
+{
+    "email": "fake@gmail.com",
+    "firstName": "Tina",
+    "lastName": "Nonya",
+    "birthday": "1990-09-09",
+    "favoriteColor": "Black"
+}
+
+###DELETE USER
+DELETE http://localhost:3001/contacts/68c0eaecd45fa9901955eb45

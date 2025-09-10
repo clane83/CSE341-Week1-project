@@ -18,7 +18,59 @@ const getSingle = async (req, res) => {
     });
 };
 
+
+const createContact = async (req, res) => {
+    //#swagger.tags['Contacts']
+    const contactId = new ObjectId(req.params.id);
+    const contact = {
+        email: req.body.email,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        birthday: req.body.birthday,
+        favoriteColor: req.body.favoriteColor
+    }
+    const response = await mongodb.getDatabase().db().collection('contacts').insertOne(contact);
+    if (response.acknowledged) {
+        res.status(204).end();
+    } else {
+        res.status(500).json(response.error || 'Some error occurred while updating the user.');
+    }
+};
+
+const updateContact = async (req, res) => {
+    //#swagger.tags['Contacts']
+    const contactId = new ObjectId(req.params.id);
+    const contact = {
+        email: req.body.email,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        birthday: req.body.birthday,
+        favoriteColor: req.body.favoriteColor
+    }
+    const response = await mongodb.getDatabase().db().collection('contacts').replaceOne({ _id: contactId }, contact);
+    if (response.modifiedCount > 0) {
+        res.status(204).end();
+    } else {
+        res.status(500).json(response.error || 'Some error occurred while updating the user.');
+    }
+};
+
+const deleteContact = async (req, res) => {
+    //#swagger.tags['Contacts']
+    const contactId = new ObjectId(req.params.id);
+    const response = await mongodb.getDatabase().db().collection('contacts').deleteOne({ _id: contactId })
+    if (response.deletedCount > 0) {
+        res.status(204).send();
+    } else {
+        res.status(500).json(response.error || 'Some error occurred while deleting the user.');
+    }
+};
+
+
 module.exports = {
     getAll,
-    getSingle
+    getSingle,
+    createContact,
+    updateContact,
+    deleteContact
 };
