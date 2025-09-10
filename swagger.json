@@ -22,7 +22,7 @@
                 }
             }
         },
-        "/users/": {
+        "/contacts/": {
             "get": {
                 "tags": [],
                 "description": "",
@@ -71,7 +71,7 @@
                 }
             }
         },
-        "/users/{id}": {
+        "/contacts/{id}": {
             "get": {
                 "tags": [],
                 "description": "",
