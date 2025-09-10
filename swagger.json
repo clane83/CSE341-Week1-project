@@ -48,13 +48,16 @@
                                 "email": {
                                     "example": "any"
                                 },
-                                "username": {
+                                "firstName": {
                                     "example": "any"
                                 },
-                                "name": {
+                                "lastName": {
                                     "example": "any"
                                 },
-                                "ipaddress": {
+                                "birthday": {
+                                    "example": "any"
+                                },
+                                "favoritColor": {
                                     "example": "any"
                                 }
                             }
@@ -111,13 +114,16 @@
                                 "email": {
                                     "example": "any"
                                 },
-                                "username": {
+                                "firstName": {
                                     "example": "any"
                                 },
-                                "name": {
+                                "lastName": {
                                     "example": "any"
                                 },
-                                "ipaddress": {
+                                "birthday": {
+                                    "example": "any"
+                                },
+                                "favoritColor": {
                                     "example": "any"
                                 }
                             }
