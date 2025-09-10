@@ -1,13 +1,13 @@
 //LOCALHOST TESTING
-###GET ALL USERS
+###GET ALL CONTRACTS
 GET http://localhost:3001/contacts
 
 
-###GET SINGLE USER
+###GET SINGLE CONTRACTS
 GET http://localhost:3001/contacts/68ba69958787c8d2ef38d21a
 
 
-###CREATE USER
+###CREATE CONTRACTS
 POST http://localhost:3001/contacts
 Content-Type: application/json
 
@@ -19,7 +19,7 @@ Content-Type: application/json
     "favoriteColor": "req.body.favoriteColor"
 }
 
-###UPDATE USER
+###UPDATE CONTRACTS
 PUT http://localhost:3001/contacts/68c0ead8d45fa9901955eb43
 Content-Type: application/json
 
@@ -31,5 +31,5 @@ Content-Type: application/json
     "favoriteColor": "Black"
 }
 
-###DELETE USER
+###DELETE CONTRACTS
 DELETE http://localhost:3001/contacts/68c0eaecd45fa9901955eb45
