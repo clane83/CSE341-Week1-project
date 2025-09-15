@@ -1,45 +1,41 @@
 const mongodb = require('../data/database');
-const { ObjectId } = require('mongodb');
+const ObjectId = require('mongodb').ObjectId;
 
-const getAll = async (req, res) => {
-    //#swagger.tags['Contacts']
+const getAll = (req, res) => {
     mongodb
         .getDatabase()
         .db()
         .collection('contacts')
-        .find()
-        .toArray((err, lists) => {
-            if (err) {
-                res.status(400).json({ message: err });
-            }
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(lists);
+        .find({})
+        .toArray()
+        .then((contacts) => {
+            res.status(200).json(contacts);   // Content-Type auto set by .json()
+        })
+        .catch((err) => {
+            res.status(500).json({ message: 'Database error', error: String(err) });
         });
-
 };
 
 const getSingle = async (req, res) => {
-    //#swagger.tags['Contacts']
+    if (!ObjectId.isValid(req.params.id)) {
+        res.status(400).json('Must use a valid contact id to find a contact.');
+    }
+    const contactId = new ObjectId(req.params.id);
     mongodb
         .getDatabase()
         .db()
         .collection('contacts')
-        .find({ _id: contactId })
-        .toArray((err, result) => {
-            if (err) {
-                res.status(400).json({ message: err });
-            }
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(result[0]);
+        .find({})
+        .toArray()
+        .then((contacts) => {
+            res.status(200).json(contacts[0]);   // Content-Type auto set by .json()
+        })
+        .catch((err) => {
+            res.status(500).json({ message: 'Database error', error: String(err) });
         });
-
-
 };
 
-
 const createContact = async (req, res) => {
-    //#swagger.tags['Contacts']
-    const contactId = new ObjectId(req.params.id);
     const contact = {
         email: req.body.email,
         firstName: req.body.firstName,
@@ -49,14 +45,16 @@ const createContact = async (req, res) => {
     }
     const response = await mongodb.getDatabase().db().collection('contacts').insertOne(contact);
     if (response.acknowledged) {
-        res.status(204).end();
+        res.status(201).json(response);
     } else {
         res.status(500).json(response.error || 'Some error occurred while updating the contact.');
     }
 };
 
 const updateContact = async (req, res) => {
-    //#swagger.tags['Contacts']
+    if (!ObjectId.isValid(req.params.id)) {
+        res.status(400).json('Must use a valid contact id to update a contact.');
+    }
     const contactId = new ObjectId(req.params.id);
     const contact = {
         email: req.body.email,
@@ -65,7 +63,13 @@ const updateContact = async (req, res) => {
         birthday: req.body.birthday,
         favoriteColor: req.body.favoriteColor
     }
-    const response = await mongodb.getDatabase().db().collection('contacts').replaceOne({ _id: contactId }, contact);
+
+    const response = await mongodb
+        .getDatabase()
+        .db()
+        .collection('contacts')
+        .replaceOne({ _id: contactId }, contact);
+    console.log(response);
     if (response.modifiedCount > 0) {
         res.status(204).end();
     } else {
@@ -74,9 +78,11 @@ const updateContact = async (req, res) => {
 };
 
 const deleteContact = async (req, res) => {
-    //#swagger.tags['Contacts']
+    if (!ObjectId.isValid(req.params.id)) {
+        res.status(400).json('Must use a valid contact id to delete a contact.');
+    }
     const contactId = new ObjectId(req.params.id);
-    const response = await mongodb.getDatabase().db().collection('contacts').deleteOne({ _id: contactId })
+    const response = await mongodb.getDatabase().db().collection('contacts').deleteOne({ _id: contactId }, true)
     if (response.deletedCount > 0) {
         res.status(204).send();
     } else {
